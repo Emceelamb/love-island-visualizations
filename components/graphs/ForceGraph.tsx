@@ -116,7 +116,6 @@ export const ForceGraph = () => {
         event.subject.fx = null;
         event.subject.fy = null;
         //   event.subject.fixed = true;
-        console.log(event);
       }
       return d3
         .drag()
@@ -260,7 +259,6 @@ export const ForceGraph = () => {
       }
     );
 
-    console.log(coupleRange, "r");
 
     coupleLegendContainer
       .append("rect")
@@ -316,8 +314,7 @@ export const ForceGraph = () => {
           </text>
           {
             //@ts-ignore
-            [...new Set(data.nodes.map((d) => d.group))].map((d, i) => {
-              console.log(d);
+            [...new Set(data.nodes.map((d) => d.group))].sort().map((d, i) => {
               return (
                 <>
                   <g transform={`translate(10, ${i * 25 + 50})`}>
@@ -353,7 +350,6 @@ export const ForceGraph = () => {
           {
             //@ts-ignore
             [...new Set(data.links.map((d) => d.day))].map((d, i) => {
-              console.log(d);
               return (
                 <>
                   <g transform={`translate(0, ${i * 25 + 40})`}>
