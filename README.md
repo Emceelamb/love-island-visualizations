@@ -1,5 +1,6 @@
 # Love Island Visualizations
 
-Toy visualizations using Love Island data.
+Visualizations using Love Island data.
+
 
 
