@@ -325,7 +325,7 @@ export const ForceGraph = () => {
                       cx={0}
                       cy={0}
                       stroke={colorScale(d)}
-                      stroke-width="2"
+                      strokeWidth="2"
                       fill="none"
                     />
                     <text x={16} y={4} key={i} className="text-xs">
@@ -360,7 +360,7 @@ export const ForceGraph = () => {
                     y2={12}
                     //@ts-ignore
                     stroke={linkScale(d)}
-                    stroke-width="2"
+                    strokeWidth="2"
                   ></line>
                 </g>
                 <text x={16} y={d * 25 + 52} key={i} className="text-xs">
