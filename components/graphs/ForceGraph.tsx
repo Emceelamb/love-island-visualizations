@@ -174,7 +174,7 @@ export const ForceGraph = () => {
       .append("svg:image")
       .attr("width", 36)
       .attr("height", 36)
-      .attr("xlink:href", (d: any) => `/headshots/${d.image}`)
+      .attr("xlink:href", (d: any) => `./headshots/${d.image}`)
       .attr("clip-path", `url(#clipCircle)`)
       .attr("transform", "translate(-16,-16)");
 
