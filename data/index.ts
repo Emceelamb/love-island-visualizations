@@ -189,7 +189,7 @@ export const data: dataType = {
     },
     {
       id: "Rachel",
-      group: "5",
+      group: 5,
       image: "rachel.jpg",
     },
     {
