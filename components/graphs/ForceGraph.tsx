@@ -317,6 +317,7 @@ export const ForceGraph = () => {
           {
             //@ts-ignore
             [...new Set(data.nodes.map((d) => d.group))].map((d, i) => {
+              console.log(d);
               return (
                 <>
                   <g transform={`translate(10, ${i * 25 + 50})`}>
@@ -329,7 +330,7 @@ export const ForceGraph = () => {
                       fill="none"
                     />
                     <text x={16} y={4} key={i} className="text-xs">
-                      Entered on day {d.group}
+                      Entered on day {d}
                     </text>
                   </g>
                 </>
@@ -344,31 +345,35 @@ export const ForceGraph = () => {
           `translate(${width - 200}, 0)`
         }
       >
-        <rect width={160} height={320} x={0} fill={"#f4c7e2"}></rect>
+        <rect width={160} height={260} x={0} fill={"#f4c7e2"}></rect>
         <g transform={`translate(10, 0)`}>
           <text x={0} y={25} className="font-bold">
             Couple Legend
           </text>
-          {d3.range(11).map((d, i) => {
-            return (
-              <>
-                <g transform={`translate(0, ${d * 25 + 40})`}>
-                  <line
-                    x1={12}
-                    x2={0}
-                    y1={0}
-                    y2={12}
-                    //@ts-ignore
-                    stroke={linkScale(d)}
-                    strokeWidth="2"
-                  ></line>
-                </g>
-                <text x={16} y={d * 25 + 52} key={i} className="text-xs">
-                  Coupled on day {d}
-                </text>
-              </>
-            );
-          })}
+          {
+            //@ts-ignore
+            [...new Set(data.links.map((d) => d.day))].map((d, i) => {
+              console.log(d);
+              return (
+                <>
+                  <g transform={`translate(0, ${i * 25 + 40})`}>
+                    <line
+                      x1={12}
+                      x2={0}
+                      y1={0}
+                      y2={12}
+                      //@ts-ignore
+                      stroke={linkScale(d)}
+                      strokeWidth="2"
+                    ></line>
+                  </g>
+                  <text x={16} y={i * 25 + 52} key={i} className="text-xs">
+                    Coupled on day {d}
+                  </text>
+                </>
+              );
+            })
+          }
         </g>
       </g>
     </svg>
