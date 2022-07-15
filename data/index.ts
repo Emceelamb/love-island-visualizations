@@ -68,7 +68,7 @@ export const data: dataType = {
       image: "liberty.jpg",
     },
     {
-      id: "Aaron S",
+      id: "Aaron-S",
       group: 42,
       image: "aaron-s.jpg",
     },
@@ -153,7 +153,7 @@ export const data: dataType = {
       image: "salma.jpg",
     },
     {
-      id: "Aaron F",
+      id: "Aaron-F",
       group: 1,
       image: "aaron-f.jpg",
     },
@@ -235,7 +235,7 @@ export const data: dataType = {
       day: "1",
     },
     {
-      source: "Aaron F",
+      source: "Aaron-F",
       target: "Shannon",
       day: "1",
     },
@@ -251,7 +251,7 @@ export const data: dataType = {
     },
     {
       source: "Shannon",
-      target: "Aaron F",
+      target: "Aaron-F",
       day: "1",
     },
     {
@@ -275,13 +275,13 @@ export const data: dataType = {
       day: "5",
     },
     {
-      source: "Aaron F",
+      source: "Aaron-F",
       target: "Sharon",
       day: "5",
     },
     {
       source: "Sharon",
-      target: "Aaron F",
+      target: "Aaron-F",
       day: "5",
     },
     {
@@ -316,17 +316,22 @@ export const data: dataType = {
     },
     {
       source: "Kaz",
-      target: "Aaron F",
+      target: "Aaron-F",
       day: "14",
     },
     {
-      source: "Aaron F",
+      source: "Aaron-F",
       target: "Kaz",
       day: "14",
     },
     {
       source: "Lucinda",
       target: "Brad",
+      day: "14",
+    },
+    {
+      source: "Brad",
+      target: "Lucinda",
       day: "14",
     },
     {
@@ -370,13 +375,13 @@ export const data: dataType = {
       day: "25",
     },
     {
-      source: "Aaron F",
+      source: "Aaron-F",
       target: "Lucinda",
       day: "25",
     },
     {
       source: "Lucinda",
-      target: "Aaron F",
+      target: "Aaron-F",
       day: "25",
     },
     {
@@ -468,13 +473,13 @@ export const data: dataType = {
       day: "37",
     },
     {
-      source: "Aaron S",
+      source: "Aaron-S",
       target: "Mary",
       day: "45",
     },
     {
       source: "Mary",
-      target: "Aaron S",
+      target: "Aaron-S",
       day: "45",
     },
     {

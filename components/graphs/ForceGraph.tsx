@@ -106,6 +106,16 @@ export const ForceGraph = () => {
         if (!event.active) simulation.alphaTarget(0.3).restart();
         event.subject.fx = event.subject.x;
         event.subject.fy = event.subject.y;
+        const id = event.subject.id;
+        //@ts-ignore
+        const relationships = data.links.filter((d) => d.source.id === id);
+        relationships.forEach((d) => {
+          const relationshipLine = d3.select(
+            //@ts-ignore
+            `#${d.source.id}-${d.target.id} text`
+          );
+          relationshipLine.attr("display", "block");
+        });
       }
       function dragged(event: any) {
         event.subject.fx = event.x;
@@ -116,6 +126,16 @@ export const ForceGraph = () => {
         event.subject.fx = null;
         event.subject.fy = null;
         //   event.subject.fixed = true;
+        const id = event.subject.id;
+        //@ts-ignore
+        const relationships = data.links.filter((d) => d.source.id === id);
+        relationships.forEach((d) => {
+          const relationshipLine = d3.select(
+            //@ts-ignore
+            `#${d.source.id}-${d.target.id} text`
+          );
+          relationshipLine.attr("display", "none");
+        });
       }
       return d3
         .drag()
@@ -126,9 +146,23 @@ export const ForceGraph = () => {
 
     const link = graph
       .append("g")
-      .selectAll("line")
+      .selectAll("g")
       .data(links)
-      .join("line")
+      .join("g")
+      //@ts-ignore
+      .attr("id", (d) => `${d.source.id}-${d.target.id}`);
+
+    const linkText = link
+      .append("text")
+      .text((d) => `Coupled on day ${d.day}`)
+      .attr("font-size", 10)
+      .attr("display", "none")
+      .attr("text-align", "middle")
+      .attr("transform", "translate(-30,0)");
+
+    const linkLines = link
+      .append("line")
+      .attr("id", (d) => "id")
       .attr("stroke", (d: any) => {
         return linkScale(d.day);
       })
@@ -180,7 +214,7 @@ export const ForceGraph = () => {
     const texts = node
       .append("text")
       .text((d: any) => {
-        return `${d.id} - ${d.group}`;
+        return `${d.id}`;
       })
       .attr("text-anchor", "middle")
       .attr("transform", "translate(0,32)")
@@ -188,7 +222,25 @@ export const ForceGraph = () => {
       .attr("font-size", 5);
 
     simulation.on("tick", () => {
-      link
+      linkText
+        .attr("x", (d: any) => {
+          return (d.source.x + d.target.x) / 2;
+        })
+        .attr("y", (d: any) => (d.source.y + d.target.y) / 2);
+      // .attr("transform", (d: any) => {
+      //   var a2 = Math.atan2(d.source.y, d.source.x);
+      //   var a1 = Math.atan2(d.target.y, d.target.x);
+      //   var sign = a1 > a2 ? 1 : -1;
+      //   var angle = a1 - a2;
+      //   var K = -sign * Math.PI * 2;
+      //   var angle = Math.abs(K + angle) < Math.abs(angle) ? K + angle : angle;
+
+      //   angle *= 180/Math.PI // rads to degs
+
+      //   return `rotate(${angle})`;
+      // });
+
+      linkLines
         .attr("x1", (d: any) => d.source.x)
         .attr("y1", (d: any) => d.source.y)
         .attr("x2", (d: any) => d.target.x)
@@ -206,96 +258,6 @@ export const ForceGraph = () => {
       .on("zoom", handleZoom);
 
     svg.call(zoom);
-
-    const legend = d3
-      .select(legendRef.current)
-      .append("g")
-      .attr("transform", "translate(10,10)");
-
-    //@ts-ignore
-    const legRange = [...new Set(data.nodes.map((d) => d.group))].sort(
-      function (a, b) {
-        return a - b;
-      }
-    );
-
-    legend
-      .append("rect")
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("transform", "translate(-10, -15)")
-      .attr("fill", "#f4c7e2")
-      .attr("width", 140)
-      .attr("height", 280);
-
-    const enterLegend = legend.selectAll("circle").data(legRange).join("g");
-
-    enterLegend.append("text").text("Enter Legend").attr("x", 5).attr("y", 15);
-
-    enterLegend
-      .append("circle")
-      .attr("r", 6)
-      .attr("fill", "none")
-      .attr("stroke", (d: any) => colorScale(d))
-      .attr("stroke-width", 2)
-      .attr("cx", 5)
-      .attr("cy", (d, i) => i * 20 + 35);
-    enterLegend
-      .append("text")
-      .text((d) => `Entered day ${d}`)
-      .attr("font-size", 12)
-      .attr("x", 16)
-      .attr("y", (d, i) => i * 20 + 40);
-
-    const coupleLegendContainer = d3
-      .select(coupleLegendRef.current)
-      .append("g")
-      .attr("transform", "translate(10,10)");
-
-    //@ts-ignore
-    const coupleRange = [...new Set(data.links.map((d) => d.day))].sort(
-      function (a, b) {
-        return a - b;
-      }
-    );
-
-
-    coupleLegendContainer
-      .append("rect")
-      .attr("x", width)
-      .attr("y", 0)
-      .attr("fill", "#f4c7e2")
-      .attr("width", 140)
-      .attr("height", 210);
-
-    const coupleLegend = coupleLegendContainer
-      .selectAll("circle")
-      .data(coupleRange)
-      .join("g");
-
-    coupleLegend
-      .append("text")
-      .text("Couple Legend")
-      .attr("x", width + 10)
-      .attr("y", 25);
-
-    coupleLegend
-      .append("g")
-      .attr("transform", (d, i) => `translate(${width + 15}, ${i * 20 + 40})`)
-      .append("line")
-      .attr("fill", "none")
-      .attr("stroke", (d: any) => linkScale(d))
-      .attr("stroke-width", 2)
-      .attr("x1", (d, i) => 8)
-      .attr("x2", (d, i) => 0)
-      .attr("y1", (d, i) => 0)
-      .attr("y2", (d, i) => 8);
-    coupleLegend
-      .append("text")
-      .text((d) => `Coupled day ${d}`)
-      .attr("font-size", 12)
-      .attr("x", width + 32)
-      .attr("y", (d, i) => i * 20 + 50);
   }, [width, height]);
 
   return (
