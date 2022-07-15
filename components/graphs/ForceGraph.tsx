@@ -214,7 +214,7 @@ export const ForceGraph = () => {
     const texts = node
       .append("text")
       .text((d: any) => {
-        return `${d.id.split('-').join(" ")}`;
+        return `${d.id.split("-").join(" ")}`;
       })
       .attr("text-anchor", "middle")
       .attr("transform", "translate(0,32)")
@@ -276,25 +276,29 @@ export const ForceGraph = () => {
           </text>
           {
             //@ts-ignore
-            [...new Set(data.nodes.map((d) => d.group))].sort().map((d, i) => {
-              return (
-                <g key={i}>
-                  <g transform={`translate(10, ${i * 25 + 50})`}>
-                    <circle
-                      r={4}
-                      cx={0}
-                      cy={0}
-                      stroke={colorScale(d)}
-                      strokeWidth="2"
-                      fill="none"
-                    />
-                    <text x={16} y={4} key={i} className="text-xs">
-                      Entered on day {d}
-                    </text>
+            [...new Set(data.nodes.map((d) => d.group))]
+              .sort(function (a, b) {
+                return a - b;
+              })
+              .map((d, i) => {
+                return (
+                  <g key={i}>
+                    <g transform={`translate(10, ${i * 25 + 50})`}>
+                      <circle
+                        r={4}
+                        cx={0}
+                        cy={0}
+                        stroke={colorScale(d)}
+                        strokeWidth="2"
+                        fill="none"
+                      />
+                      <text x={16} y={4} key={i} className="text-xs">
+                        Entered on day {d}
+                      </text>
+                    </g>
                   </g>
-                </g>
-              );
-            })
+                );
+              })
           }
         </g>
       </g>
