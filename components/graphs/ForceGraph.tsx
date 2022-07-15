@@ -214,7 +214,7 @@ export const ForceGraph = () => {
     const texts = node
       .append("text")
       .text((d: any) => {
-        return `${d.id}`;
+        return `${d.id.split('-').join(" ")}`;
       })
       .attr("text-anchor", "middle")
       .attr("transform", "translate(0,32)")
@@ -278,7 +278,7 @@ export const ForceGraph = () => {
             //@ts-ignore
             [...new Set(data.nodes.map((d) => d.group))].sort().map((d, i) => {
               return (
-                <>
+                <g key={i}>
                   <g transform={`translate(10, ${i * 25 + 50})`}>
                     <circle
                       r={4}
@@ -292,7 +292,7 @@ export const ForceGraph = () => {
                       Entered on day {d}
                     </text>
                   </g>
-                </>
+                </g>
               );
             })
           }
@@ -313,7 +313,7 @@ export const ForceGraph = () => {
             //@ts-ignore
             [...new Set(data.links.map((d) => d.day))].map((d, i) => {
               return (
-                <>
+                <g key={i}>
                   <g transform={`translate(0, ${i * 25 + 40})`}>
                     <line
                       x1={12}
@@ -328,7 +328,7 @@ export const ForceGraph = () => {
                   <text x={16} y={i * 25 + 52} key={i} className="text-xs">
                     Coupled on day {d}
                   </text>
-                </>
+                </g>
               );
             })
           }
